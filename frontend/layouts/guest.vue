@@ -1,6 +1,5 @@
 <template>
     <slot v-if="!loading_authentication && !is_authenticated" />
-    {{ loading_authentication }}
 </template>
 <script setup lang="ts">
 

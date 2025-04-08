@@ -8,8 +8,11 @@ export const useAuthStore = defineStore('user', () => {
     const check = async (): Promise<boolean> => {
 
         const token = localStorage.getItem("authentication-token")
-        if( !token )
+        if( !token ) {
+
+            loading_authentication.value = false
             return Promise.resolve(false)
+        }
 
         loading_authentication.value = true 
         return ask.checkToken(token)
@@ -28,11 +31,11 @@ export const useAuthStore = defineStore('user', () => {
             .finally( () => loading_authentication.value = false )
     }
 
-    const login = async (first_name: string, last_name: string, phone_number: string, code_melli: string): Promise<void> => {
+    const login = async (first_name: string, last_name: string, phone_number: string, melli_code: string): Promise<void> => {
 
         loading_authentication.value = true 
         error_authentication.value = null
-        return ask.login(first_name, last_name, phone_number, code_melli)
+        return ask.login(first_name, last_name, phone_number, melli_code)
             .then( token => {
 
                 authentication_token.value = token

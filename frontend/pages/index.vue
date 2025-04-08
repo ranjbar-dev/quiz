@@ -1,7 +1,7 @@
 <template>
     Home
 </template>
-<script setup="ts">
+<script setup lang="ts">
 
 definePageMeta({
     layout: "panel",
