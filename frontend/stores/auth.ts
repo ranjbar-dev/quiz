@@ -1,9 +1,12 @@
-export const useAuthStore = defineStore('user', () => {
+import { useUserStore } from "./user"
+
+export const useAuthStore = defineStore('auth', () => {
     
     const is_authenticated = ref<boolean>(false)
     const authentication_token = ref<string | null>(null)
     const loading_authentication = ref<boolean>(true)
-    const error_authentication = ref<string | null>(null)
+
+    const userStore = useUserStore()
 
     const check = async (): Promise<boolean> => {
 
@@ -16,12 +19,13 @@ export const useAuthStore = defineStore('user', () => {
 
         loading_authentication.value = true 
         return ask.checkToken(token)
-            .then( (is_valid) => {
+            .then( async (is_valid) => {
 
                 if( is_valid ) {
 
                     is_authenticated.value = true 
                     authentication_token.value = token 
+                    await userStore.fetchUser()
                     return true
                 } else {
 
@@ -31,23 +35,23 @@ export const useAuthStore = defineStore('user', () => {
             .finally( () => loading_authentication.value = false )
     }
 
-    const login = async (first_name: string, last_name: string, phone_number: string, melli_code: string): Promise<void> => {
+    const login = async (personal_number: string, password: string): Promise<void> => {
 
         loading_authentication.value = true 
-        error_authentication.value = null
-        return ask.login(first_name, last_name, phone_number, melli_code)
-            .then( token => {
+        return ask.login(personal_number, password)
+            .then( ({token, user}) => {
 
+                userStore.setUser(user)
                 authentication_token.value = token
                 is_authenticated.value = true 
                 localStorage.setItem("authentication-token", token)
             })
-            .catch( (error) => error_authentication.value = error.message)
             .finally( () => loading_authentication.value = false )
     }
 
     const logout = () => {
 
+        userStore.unSetUser()
         authentication_token.value = null
         is_authenticated.value = false 
         localStorage.removeItem("authentication-token")
@@ -57,7 +61,6 @@ export const useAuthStore = defineStore('user', () => {
         is_authenticated,
         authentication_token,
         loading_authentication,
-        error_authentication,
 
         login,
         logout,

@@ -1,5 +1,7 @@
 <template>
-    Home
+    <div>
+        
+    </div>
 </template>
 <script setup lang="ts">
 
@@ -10,5 +12,9 @@ definePageMeta({
 useHead({
     title: `Home`,
 })
+
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
 
 </script>

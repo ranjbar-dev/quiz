@@ -1,14 +1,15 @@
 <template>
-    <slot v-if="!loading_authentication && !is_authenticated" />
+    <MasterHeader />
+    <MasterBody>
+        <slot />
+    </MasterBody>
+    <MasterFooter />
 </template>
 <script setup lang="ts">
-
-import { useAuthStore } from '~/stores/auth';
 
 const authStore = useAuthStore()
 const route = useRoute()
 
-const { is_authenticated, loading_authentication } = storeToRefs(authStore)
 onMounted( () => {
 
     authStore.check()

@@ -1,46 +1,31 @@
 <template>
-    <div class="flex flex-col items-center justify-center h-screen w-screen bg-slate-100" dir="rtl">
        
+    <div class="w-80 border bg-white border-gray-100 rounded-md py-8 px-6"> 
 
-        <div class="w-96 border bg-white border-gray-100 rounded-md py-8 px-6"> 
-
-            <div class="text-gray-800 text-16p font-bold text-center mb-8">
-                سامانه ثبت نام ورود سرویس های سازمانی
-            </div>
-
-            <div class="mb-4">
-                <div class="login-label">نام</div>
-                <input type="text" class="login-input" v-model="first_name" placeholder="مثال: امیر حسین" />
-            </div>
-
-            <div class="mb-4">
-                <div class="login-label">نام خانوادگی</div>
-                <input type="text" class="login-input" v-model="last_name" placeholder="مثال: حسینی" />
-            </div>
-
-            <div class="mb-4">
-                <div class="login-label">شماره تلفن</div>
-                <input type="text" class="login-input" v-model="phone_number" placeholder="مثال: 09123456789" />
-            </div>
-
-            <div class="mb-6">
-                <div class="login-label">کد ملی</div>
-                <input type="text" class="login-input" v-model="national_code" placeholder="مثال: 00123456789" />
-            </div>
-
-            <button class="login-button" :data-loading="loading_authentication" @click="send_data"> 
-            
-                <span v-if="loading_authentication">
-                    در حال ارسال ...
-                </span>
-                <span v-else>
-                    ارسال 
-                </span>
-            </button>
-
+        <div class="text-gray-800 text-16p font-bold text-center mb-8">
+            سامانه آموزش و تعبیه فراوان کارگران
         </div>
 
+        <div class="mb-4">
+            <div class="login-label">کد پرسنلی</div>
+            <input type="text" class="login-input" v-model="personal_number" placeholder="مثال: 416464" :disabled="loading_authentication" />
+        </div>
+
+        <div class="mb-6">
+            <div class="login-label">رمز عبور</div>
+            <input type="text" class="login-input" v-model="password" placeholder="مثال: 12345678" :disabled="loading_authentication" />
+        </div>
+
+        <button class="login-button" :data-loading="loading_authentication" @click="send_data"> 
+        
+            <LoadingSpinner v-if="loading_authentication" size="12" />
+
+            <span v-else> ورود به سامانه </span>
+            
+        </button>
+
     </div>
+
 </template>
 <script setup lang="ts">
 
@@ -49,7 +34,7 @@ definePageMeta({
 })
 
 useHead({
-    title: `Login`,
+    title: `صفحه ورود`,
 })
 
 const router = useRouter()
@@ -58,21 +43,21 @@ const authStore = useAuthStore()
 
 const { loading_authentication } = storeToRefs(authStore)
 
-const first_name = ref<string>("")
-const last_name = ref<string>("")
-const phone_number = ref<string>("")
-const national_code = ref<string>("")
+const personal_number = ref<string>("")
+const password = ref<string>("")
 
 const send_data = () => {
     
     if( loading_authentication.value ) 
         return
  
-    authStore.login(first_name.value, last_name.value, phone_number.value, national_code.value)
-        .then((r) => {
-            console.warn(r)
-        } )
-        .catch((error) => swal.error("خطا", error) ) 
+    authStore.login(personal_number.value, password.value)
+        .then(() =>  {
+
+            swal.success("ورود با موفقیت انجام شد", "شما با موفقیت وارد سامانه شدید")
+            router.push("/")
+        })
+        .catch((error) => swal.error("خطا", error.message) ) 
 }
 
 </script>
@@ -87,7 +72,7 @@ const send_data = () => {
    }
    
    .login-button {
-        @apply text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full;
+        @apply flex items-center justify-center h-10 text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full;
    }
    
    .login-button[data-loading="true"] {

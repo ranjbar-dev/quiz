@@ -14,5 +14,10 @@ export const swal = {
     error: (title: string, text: string) => {
 
         return swal.default({ title, text, icon: "error" })
-    }
+    },
+
+    success: (title: string, text: string) => {
+
+        return swal.default({ title, text, icon: "success" })
+    },
 }

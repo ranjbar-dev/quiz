@@ -1,5 +1,9 @@
 <template>
-    <slot v-if="!loading_authentication && is_authenticated" />
+    <MasterHeader />
+    <MasterBody>
+        <slot v-if="!loading_authentication && is_authenticated" />
+    </MasterBody>
+    <MasterFooter />
 </template>
 <script setup lang="ts">
 
