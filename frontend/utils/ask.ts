@@ -4,7 +4,6 @@ const api = async (url: string, params: any = {}): Promise<any> => {
 
   const { authentication_token } = storeToRefs(useAuthStore())
 
-
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   }
@@ -31,7 +30,9 @@ export const ask = {
 
     login: (personal_number: string, password: string): Promise<{token: string, user: UserModel}> => api("/api/login", { personal_number, password }),
 
-    get_user: (): Promise<UserModel> => api("/api/user").then( data => data.user ),
+    getUser: (): Promise<UserModel> => api("/api/user").then( data => data.user ),
+
+    updateProfile: (first_name: string, last_name: string, phone_number: string): Promise<UserModel> => api("/api/update-profile", { first_name, last_name, phone_number }).then( data => data.user ),
 
     checkToken: (token: string): Promise<boolean> => api("/api/check", { token }).then( data => data.is_valid )
 

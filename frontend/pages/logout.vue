@@ -12,7 +12,7 @@ definePageMeta({
 })
 
 useHead({
-    title: `صفحه خروج`,
+    title: `خروج از حساب کاربری`,
 })
 
 const router = useRouter()

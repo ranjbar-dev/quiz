@@ -1,17 +1,17 @@
 <template>
        
-    <div class="w-80 border bg-white border-gray-100 rounded-md py-8 px-6"> 
+    <div class="w-full md:w-1/2 lg:w-2/3 xl:w-1/4 border bg-white border-gray-100 rounded-md py-10 px-6 flex flex-col items-center justify-center"> 
 
         <div class="text-gray-800 text-16p font-bold text-center mb-8">
             سامانه آموزش و تعبیه فراوان کارگران
         </div>
 
-        <div class="mb-4">
+        <div class="w-2/3 mb-6">
             <div class="login-label">کد پرسنلی</div>
             <input type="text" class="login-input" v-model="personal_number" placeholder="مثال: 416464" :disabled="loading_authentication" />
         </div>
 
-        <div class="mb-6">
+        <div class="w-2/3 mb-8">
             <div class="login-label">رمز عبور</div>
             <input type="text" class="login-input" v-model="password" placeholder="مثال: 12345678" :disabled="loading_authentication" />
         </div>
@@ -34,7 +34,7 @@ definePageMeta({
 })
 
 useHead({
-    title: `صفحه ورود`,
+    title: `ورود به سامانه`,
 })
 
 const router = useRouter()
@@ -61,18 +61,18 @@ const send_data = () => {
 }
 
 </script>
-<style>
+<style scoped>
 
     .login-label {
         @apply text-gray-800 text-14p mb-2;
     }
     
    .login-input {
-        @apply w-full text-gray-700 text-14p border border-slate-200 focus:border-blue-200 rounded px-2 py-1.5;
+        @apply text-gray-700 text-14p border border-slate-200 focus:border-blue-200 rounded px-2 py-1.5;
    }
    
    .login-button {
-        @apply flex items-center justify-center h-10 text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full;
+        @apply w-48 flex items-center justify-center h-10 text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md float-start;
    }
    
    .login-button[data-loading="true"] {

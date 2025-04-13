@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
             return Promise.reject(new Error("احراز هویت انجام نشده است"))
 
         loading_user.value = true
-        return ask.get_user()
+        return ask.getUser()
             .then( (value) => user.value = value )
             .finally( () => loading_user.value = false )
     }

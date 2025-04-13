@@ -7,3 +7,12 @@
      outline: none;
      direction: rtl;
 }
+
+.w-auto-card {
+     @apply w-full md:w-1/2 lg:w-2/3 xl:w-1/3; 
+}
+
+.w-auto-slider {
+     @apply w-full md:w-1/2 lg:w-2/3 xl:w-1/2; 
+}
+ 

@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 
   css: ["~/assets/css/main.css", "~/assets/css/fontiran.css"],
 
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "nuxt-swiper"],
 
   // "@vite-pwa/nuxt",
   

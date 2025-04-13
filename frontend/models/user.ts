@@ -12,3 +12,10 @@ export const userFromJson = (item: any): UserModel => ({
     phone_number: item.phone_number,
 });
 
+export const defaultUser = (): any => ({
+    id: 0,
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+});
+
