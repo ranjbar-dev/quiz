@@ -1,6 +1,6 @@
 <template>
 
-    <div class="hidden lg:flex h-16 w-screen px-4 gap-12 items-center justify-center bg-white border-t border-gray-100"> 
+    <div class="hidden lg:flex h-20 w-full px-4 gap-12 items-center justify-center bg-white border-t border-gray-100"> 
         
         <div class="flex items-center gap-6">
 
@@ -14,7 +14,7 @@
 
     </div>
 
-    <div class="flex lg:hidden h-16 w-screen px-4 gap-8 items-center justify-center bg-white border-t border-gray-100"> 
+    <div class="flex lg:hidden h-20 w-full px-4 gap-8 items-center justify-center bg-white border-t border-gray-100"> 
 
         <div class="footer-link-mobile" data-selected="true">
 

@@ -1,6 +1,6 @@
 <template>
        
-    <div class="w-auto-card border bg-white border-gray-100 rounded-md px-6 py-4"> 
+    <div class="border bg-white border-gray-100 rounded-md px-6 py-4"> 
 
         <div class="flex items-center justify-between text-base text-gray-800 pb-2"> 
         
@@ -17,25 +17,54 @@
             </NuxtLink>
             
         </div>
+ 
+        <div class="form-container">
 
-        <div class="mb-4 mt-4">
-            <div class="form-label">کد پرسنلی</div>
-            <input type="text" class="form-input cursor-not-allowed" :value="temp_user.id" :disabled="true" />
-        </div>
-        
-        <div class="mb-4">
-            <div class="form-label">نام</div>
-            <input type="text" class="form-input" v-model="temp_user.first_name" placeholder="مثال: امیر حسین" :disabled="loading" />
-        </div>
+            <div class="form">
+                <div class="form-label">کد پرسنلی</div>
+                <input type="text" class="form-input" :value="temp_user.id" placeholder="مثال: 416464" :disabled="true" />
+            </div>
 
-        <div class="mb-4">
-            <div class="form-label">نام خانوادگی</div>
-            <input type="text" class="form-input" v-model="temp_user.last_name" placeholder="مثال: رنجبر حسنی" :disabled="loading" />
-        </div>
+            <div class="form">
+                <div class="form-label">گروه های شغلی</div>
+                <input type="text" class="form-input" :value="temp_user.jobs.join(', ')" placeholder="مثال: جوشکار, ..." :disabled="true" />
+            </div>
+    
+            <div class="form">
+                <div class="form-label">نام خانوادگی</div>
+                <input type="text" class="form-input" v-model="temp_user.last_name" placeholder="مثال: رنجبر حسنی" :disabled="loading" />
+            </div>
 
-        <div class="mb-4">
-            <div class="form-label">شماره تلفن</div>
-            <input type="text" class="form-input" v-model="temp_user.phone_number" placeholder="مثال: 09123456789" :disabled="loading" />
+            <div class="form">
+                <div class="form-label">نام</div>
+                <input type="text" class="form-input" v-model="temp_user.first_name" placeholder="مثال: امیر حسین" :disabled="loading" />
+            </div>
+    
+            <div class="form">
+                <div class="form-label">نام خانوادگی</div>
+                <input type="text" class="form-input" v-model="temp_user.last_name" placeholder="مثال: رنجبر حسنی" :disabled="loading" />
+            </div>
+    
+            <div class="form">
+                <div class="form-label">شماره تلفن</div>
+                <input type="text" class="form-input" v-model="temp_user.phone_number" placeholder="مثال: 09123456789" :disabled="loading" />
+            </div>
+    
+            <div class="form">
+                <div class="form-label">کدملی</div>
+                <input type="text" class="form-input" v-model="temp_user.melli_code" placeholder="مثال: 3040506070" :disabled="loading" />
+            </div>
+
+            <div class="form">
+                <div class="form-label">مدرک تحصیلی</div>
+                <input type="text" class="form-input" v-model="temp_user.education_level" placeholder="مثال: دیپلم" :disabled="loading" />
+            </div>
+    
+            <div class="form">
+                <div class="form-label">تاریخ تولد</div>
+                <input type="text" class="form-input" v-model="temp_user.birth_date" placeholder="مثال: 1360/01/01" :disabled="loading" />
+            </div>
+
         </div>
 
         <div class="mt-6">
@@ -79,8 +108,11 @@ onMounted(() => {
 
 const submit = () => {
 
+    if( loading.value )
+        return ;
+
     loading.value = true
-    ask.updateProfile(temp_user.value.first_name, temp_user.value.last_name, temp_user.value.phone_number)
+    ask.updateProfile(temp_user.value.first_name, temp_user.value.last_name, temp_user.value.phone_number, temp_user.value.melli_code, temp_user.value.birth_date, temp_user.value.education_level)
         .then( (value) => {
 
             user.value = {... value}
@@ -92,16 +124,24 @@ const submit = () => {
 </script>
 <style scoped>
 
+    .form-container {
+        @apply flex flex-col lg:flex-row flex-nowrap lg:flex-wrap ;
+    }
+
+    .form {
+        @apply w-full lg:w-1/3 me-2 mb-4 pe-4;
+    }
+    
     .form-label {
         @apply text-gray-800 text-14p mb-2;
     }
     
    .form-input {
-        @apply w-2/3 text-gray-700 text-14p border border-slate-200 focus:border-blue-200 rounded px-2 py-1.5;
+        @apply w-full text-gray-700 text-14p border border-slate-200 focus:border-blue-200 rounded px-2 py-1.5;
    }
    
    .submit-button {
-        @apply flex items-center justify-center h-10 text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full;
+        @apply w-56 flex items-center justify-center h-10 text-14p bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md;
    }
    
    .submit-button[data-loading="true"] {

@@ -1,9 +1,9 @@
 <template>
        
-    <div class="w-full md:w-1/2 lg:w-2/3 xl:w-1/4 border bg-white border-gray-100 rounded-md py-10 px-6 flex flex-col items-center justify-center"> 
+    <div class="w-full sm:w-96 border bg-white border-gray-100 rounded-md py-10 px-6 flex flex-col items-center justify-center my-auto"> 
 
         <div class="text-gray-800 text-16p font-bold text-center mb-8">
-            سامانه آموزش و تعبیه فراوان کارگران
+            سامانه آموزشی سرشت
         </div>
 
         <div class="w-2/3 mb-6">

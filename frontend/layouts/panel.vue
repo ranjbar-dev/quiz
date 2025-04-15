@@ -1,7 +1,7 @@
 <template>
     <MasterHeader />
     <MasterBody>
-        <slot v-if="!loading_authentication && is_authenticated && !loading_user" class="justify-start" />
+        <slot v-if="!loading_authentication && is_authenticated && !loading_user" />
     </MasterBody>
     <MasterFooter />
 </template>

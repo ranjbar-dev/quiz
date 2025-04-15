@@ -35,6 +35,10 @@ export default defineEventHandler(async (event) => {
             first_name,
             last_name,
             phone_number,
+            melli_code: "001234567890",
+            birth_date: "1360/01/01",
+            education_level: "دیپلم",
+            jobs: ["جوشکار", "آهنگر"],
         },
     }
   }

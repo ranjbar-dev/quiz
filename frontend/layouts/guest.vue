@@ -1,6 +1,6 @@
 <template>
     <MasterHeader />
-    <MasterBody class="justify-center">
+    <MasterBody>
         <slot />
     </MasterBody>
     <MasterFooter />

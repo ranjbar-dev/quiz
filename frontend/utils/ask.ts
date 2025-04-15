@@ -32,7 +32,7 @@ export const ask = {
 
     getUser: (): Promise<UserModel> => api("/api/user").then( data => data.user ),
 
-    updateProfile: (first_name: string, last_name: string, phone_number: string): Promise<UserModel> => api("/api/update-profile", { first_name, last_name, phone_number }).then( data => data.user ),
+    updateProfile: (first_name: string, last_name: string, phone_number: string, melli_code: string, birth_date: string, education_level: string): Promise<UserModel> => api("/api/update-profile", { first_name, last_name, phone_number, melli_code, birth_date, education_level }).then( data => data.user ),
 
     checkToken: (token: string): Promise<boolean> => api("/api/check", { token }).then( data => data.is_valid )
 

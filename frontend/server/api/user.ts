@@ -22,6 +22,10 @@ export default defineEventHandler(async (event) => {
             first_name: "امیر حسین",
             last_name: "رنجبر حسنی",
             phone_number: "09131926547",
+            melli_code: "001234567890",
+            birth_date: "1360/01/01",
+            education_level: "دیپلم",
+            jobs: ["جوشکار", "آهنگر"],
         },
     }
   }
