@@ -43,8 +43,8 @@ const authStore = useAuthStore()
 
 const { loading_authentication } = storeToRefs(authStore)
 
-const personal_number = ref<string>("")
-const password = ref<string>("")
+const personal_number = ref<string>("10020")
+const password = ref<string>("admin")
 
 const send_data = () => {
     

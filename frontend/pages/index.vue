@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-start items-start">
+    <div class="page-container flex flex-col justify-start items-start">
 
         <img :src="`/images/slider/1.jpg`" alt="slide" class="mx-auto w-2/3 object-cover rounded-md">
 

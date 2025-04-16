@@ -1,6 +1,6 @@
 <template>
        
-    <div class="text-gray-800 text-16p font-bold text-center mb-8">
+    <div class="page-container text-gray-800 text-16p font-bold text-center mb-8">
         <LoadingSpinner />
     </div>
 

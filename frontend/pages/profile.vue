@@ -1,6 +1,10 @@
 <template>
        
-    <div class="border bg-white border-gray-100 rounded-md px-6 py-4"> 
+    <div v-if="loading_jobs" class="flex items-center justify-center h-screen"   >
+    <LoadingSpinner size="12" />
+    </div>
+
+    <div class="page-container border bg-white border-gray-100 rounded-md px-6 py-4" v-else> 
 
         <div class="flex items-center justify-between text-base text-gray-800 pb-2"> 
         
@@ -27,7 +31,7 @@
 
             <div class="form">
                 <div class="form-label">گروه های شغلی</div>
-                <input type="text" class="form-input" :value="temp_user.jobs.join(', ')" placeholder="مثال: جوشکار, ..." :disabled="true" />
+                <input type="text" class="form-input" :value="use_jobs" placeholder="مثال: جوشکار, ..." :disabled="true" />
             </div>
     
             <div class="form">
@@ -94,16 +98,25 @@ useHead({
 })
 
 const userStore = useUserStore()
+const jobStore = useJobStore()
 
 const { user } = storeToRefs(userStore)
+const { jobs, loading_jobs } = storeToRefs(jobStore)
 
 const temp_user = ref<UserModel>(defaultUser())
 const loading = ref<boolean>(false)
+
+const use_jobs = computed(() => {
+
+    return jobs.value.filter( (job) => temp_user.value.jobs.includes(job.id) ).map( (job) => job.name ).join(', ')
+})
 
 onMounted(() => {
 
     if ( user.value )
         temp_user.value = {...user.value}
+
+    jobStore.fetchJobs()
 })
 
 const submit = () => {
@@ -148,4 +161,7 @@ const submit = () => {
         @apply bg-gray-500 cursor-wait;
    }
    
+   input:disabled {
+        @apply bg-gray-50 cursor-not-allowed;
+   }
 </style>

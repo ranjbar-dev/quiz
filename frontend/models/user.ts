@@ -6,7 +6,7 @@ export interface UserModel {
     melli_code: string;
     birth_date: string;
     education_level: string;
-    jobs: string[];
+    jobs: number[];
 }
 
 export const userFromJson = (item: any): UserModel => ({

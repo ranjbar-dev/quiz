@@ -59,6 +59,15 @@ export default defineNuxtConfig({
   //   },
   // },
 
+  nitro: {
+    routeRules: {
+      '/api/**': {
+        proxy: 'http://localhost:8000/**'
+      }
+    }
+  },
+
+
   postcss: {
     plugins: {
       tailwindcss: {},

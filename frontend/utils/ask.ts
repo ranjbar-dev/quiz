@@ -1,6 +1,7 @@
+import type { JobModel } from "~/models/job"
 import type { UserModel } from "~/models/user"
 
-const api = async (url: string, params: any = {}): Promise<any> => {
+const api = async (method: string, url: string, params: any = {}): Promise<any> => {
 
   const { authentication_token } = storeToRefs(useAuthStore())
 
@@ -11,29 +12,34 @@ const api = async (url: string, params: any = {}): Promise<any> => {
   if( authentication_token.value )
     headers['Authorization'] = `Bearer ${authentication_token.value}`
 
+  let body = null
+  if( params )  
+    body = JSON.stringify(params)
+
   return fetch(url, {
-      method: 'POST',
+      method: method,
       headers: headers,
-      body: JSON.stringify(params)
+      body: body
     })
-    .then( response => response.json() )  
-    .then( data => {
+    .then( async (response) => {
 
-      if( data.statusCode == 200 )
-        return data.data
+      const json = await response.json()
 
-      throw new Error(data.message)
-    })
+      if( response.status != 200 )
+        throw new Error(json.message)
+
+      return json
+    })  
 }
 
 export const ask = {
 
-    login: (personal_number: string, password: string): Promise<{token: string, user: UserModel}> => api("/api/login", { personal_number, password }),
+    login: (personal_number: string, password: string): Promise<{token: string, user: UserModel}> => api("POST", "/api/auth/login", { id: parseInt(personal_number), password: password }).then( data => ({ token: data.token, user: data.user }) ),
 
-    getUser: (): Promise<UserModel> => api("/api/user").then( data => data.user ),
+    getUser: (): Promise<UserModel> => api("POST", "/api/auth/user").then( data => data ),
 
-    updateProfile: (first_name: string, last_name: string, phone_number: string, melli_code: string, birth_date: string, education_level: string): Promise<UserModel> => api("/api/update-profile", { first_name, last_name, phone_number, melli_code, birth_date, education_level }).then( data => data.user ),
+    getJobs: (): Promise<JobModel[]> => api("POST", "/api/job/all").then( data => data ),
 
-    checkToken: (token: string): Promise<boolean> => api("/api/check", { token }).then( data => data.is_valid )
+    updateProfile: (first_name: string, last_name: string, phone_number: string, melli_code: string, birth_date: string, education_level: string): Promise<UserModel> => api("POST", "/api/update-profile", { first_name, last_name, phone_number, melli_code, birth_date, education_level }).then( data => data.user ),
 
 }

@@ -18,20 +18,19 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         loading_authentication.value = true 
-        return ask.checkToken(token)
-            .then( async (is_valid) => {
+        return ask.getUser()
+            .then( (user) => {
 
-                if( is_valid ) {
-
-                    is_authenticated.value = true 
-                    authentication_token.value = token 
-                    await userStore.fetchUser()
-                    return true
-                } else {
-
-                    return false 
-                }
+                is_authenticated.value = true 
+                authentication_token.value = token 
+                return true
             })
+            .catch( (error) => {
+
+                console.log(error)
+                loading_authentication.value = false
+                return false
+            } )
             .finally( () => loading_authentication.value = false )
     }
 
@@ -46,6 +45,11 @@ export const useAuthStore = defineStore('auth', () => {
                 is_authenticated.value = true 
                 localStorage.setItem("authentication-token", token)
             })
+            .catch( (error) => {
+
+                console.log(error)
+                loading_authentication.value = false
+            } )
             .finally( () => loading_authentication.value = false )
     }
 
