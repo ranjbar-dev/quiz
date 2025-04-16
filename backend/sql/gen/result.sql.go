@@ -24,3 +24,80 @@ func (q *Queries) CountUserResultsForExam(ctx context.Context, arg CountUserResu
 	err := row.Scan(&count)
 	return count, err
 }
+
+const findResult = `-- name: FindResult :one
+SELECT id, user_id, exam_id, questions_ids, answers, status, score, started_at, finished_at, created_at FROM results WHERE id = $1
+`
+
+func (q *Queries) FindResult(ctx context.Context, id int32) (Result, error) {
+	row := q.db.QueryRow(ctx, findResult, id)
+	var i Result
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.ExamID,
+		&i.QuestionsIds,
+		&i.Answers,
+		&i.Status,
+		&i.Score,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getResultsFilterStatusAndUserID = `-- name: GetResultsFilterStatusAndUserID :many
+SELECT id, user_id, exam_id, questions_ids, answers, status, score, started_at, finished_at, created_at FROM results WHERE user_id = $1 AND status = $2
+`
+
+type GetResultsFilterStatusAndUserIDParams struct {
+	UserID int32
+	Status int16
+}
+
+func (q *Queries) GetResultsFilterStatusAndUserID(ctx context.Context, arg GetResultsFilterStatusAndUserIDParams) ([]Result, error) {
+	rows, err := q.db.Query(ctx, getResultsFilterStatusAndUserID, arg.UserID, arg.Status)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Result
+	for rows.Next() {
+		var i Result
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.ExamID,
+			&i.QuestionsIds,
+			&i.Answers,
+			&i.Status,
+			&i.Score,
+			&i.StartedAt,
+			&i.FinishedAt,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const updateResultToProcessing = `-- name: UpdateResultToProcessing :exec
+UPDATE results SET status = $2, started_at = $3 WHERE id = $1
+`
+
+type UpdateResultToProcessingParams struct {
+	ID        int32
+	Status    int16
+	StartedAt int64
+}
+
+func (q *Queries) UpdateResultToProcessing(ctx context.Context, arg UpdateResultToProcessingParams) error {
+	_, err := q.db.Exec(ctx, updateResultToProcessing, arg.ID, arg.Status, arg.StartedAt)
+	return err
+}
