@@ -52,19 +52,20 @@ type Result struct {
 }
 
 type User struct {
-	ID           int32
-	FirstName    string
-	LastName     string
-	NationalCode string
-	FatherName   string
-	Gender       int16
-	BirthDate    string
-	BirthPlace   string
-	Department   string
-	Position     string
-	PhoneNumber  string
-	WorkPhone    string
-	Jobs         string
-	Password     string
-	CreatedAt    int64
+	ID             int32
+	FirstName      string
+	LastName       string
+	NationalCode   string
+	FatherName     string
+	Gender         int16
+	BirthDate      string
+	BirthPlace     string
+	Department     string
+	Position       string
+	PhoneNumber    string
+	WorkPhone      string
+	Jobs           string
+	EducationLevel int16
+	Password       string
+	CreatedAt      int64
 }

@@ -7,11 +7,6 @@ export const useUserStore = defineStore('user', () => {
    
     const fetchUser = async (): Promise<UserModel | null> => {
 
-        const { authentication_token } = storeToRefs(useAuthStore())
-
-        if( !authentication_token.value )
-            return Promise.reject(new Error("احراز هویت انجام نشده است"))
-
         loading_user.value = true
         return ask.getUser()
             .then( (value) => user.value = value )

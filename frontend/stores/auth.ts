@@ -3,7 +3,7 @@ import { useUserStore } from "./user"
 export const useAuthStore = defineStore('auth', () => {
     
     const is_authenticated = ref<boolean>(false)
-    const authentication_token = ref<string | null>(null)
+    const authentication_token = ref<string | null>(localStorage.getItem("authentication-token"))
     const loading_authentication = ref<boolean>(true)
 
     const userStore = useUserStore()
@@ -18,8 +18,8 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         loading_authentication.value = true 
-        return ask.getUser()
-            .then( (user) => {
+        return userStore.fetchUser()
+            .then( () => {
 
                 is_authenticated.value = true 
                 authentication_token.value = token 

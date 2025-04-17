@@ -10,7 +10,7 @@ import (
 )
 
 const findUser = `-- name: FindUser :one
-SELECT id, first_name, last_name, national_code, father_name, gender, birth_date, birth_place, department, position, phone_number, work_phone, jobs, password, created_at FROM users WHERE id = $1
+SELECT id, first_name, last_name, national_code, father_name, gender, birth_date, birth_place, department, position, phone_number, work_phone, jobs, education_level, password, created_at FROM users WHERE id = $1
 `
 
 func (q *Queries) FindUser(ctx context.Context, id int32) (User, error) {
@@ -30,6 +30,7 @@ func (q *Queries) FindUser(ctx context.Context, id int32) (User, error) {
 		&i.PhoneNumber,
 		&i.WorkPhone,
 		&i.Jobs,
+		&i.EducationLevel,
 		&i.Password,
 		&i.CreatedAt,
 	)
@@ -37,22 +38,23 @@ func (q *Queries) FindUser(ctx context.Context, id int32) (User, error) {
 }
 
 const updateUser = `-- name: UpdateUser :one
-UPDATE users SET first_name = $2, last_name = $3, national_code = $4, father_name = $5, gender = $6, birth_date = $7, birth_place = $8, department = $9, position = $10, phone_number = $11, work_phone = $12 WHERE id = $1 RETURNING id, first_name, last_name, national_code, father_name, gender, birth_date, birth_place, department, position, phone_number, work_phone, jobs, password, created_at
+UPDATE users SET first_name = $2, last_name = $3, national_code = $4, father_name = $5, gender = $6, birth_date = $7, birth_place = $8, department = $9, position = $10, phone_number = $11, work_phone = $12, education_level = $13 WHERE id = $1 RETURNING id, first_name, last_name, national_code, father_name, gender, birth_date, birth_place, department, position, phone_number, work_phone, jobs, education_level, password, created_at
 `
 
 type UpdateUserParams struct {
-	ID           int32
-	FirstName    string
-	LastName     string
-	NationalCode string
-	FatherName   string
-	Gender       int16
-	BirthDate    string
-	BirthPlace   string
-	Department   string
-	Position     string
-	PhoneNumber  string
-	WorkPhone    string
+	ID             int32
+	FirstName      string
+	LastName       string
+	NationalCode   string
+	FatherName     string
+	Gender         int16
+	BirthDate      string
+	BirthPlace     string
+	Department     string
+	Position       string
+	PhoneNumber    string
+	WorkPhone      string
+	EducationLevel int16
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {
@@ -69,6 +71,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		arg.Position,
 		arg.PhoneNumber,
 		arg.WorkPhone,
+		arg.EducationLevel,
 	)
 	var i User
 	err := row.Scan(
@@ -85,6 +88,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.PhoneNumber,
 		&i.WorkPhone,
 		&i.Jobs,
+		&i.EducationLevel,
 		&i.Password,
 		&i.CreatedAt,
 	)

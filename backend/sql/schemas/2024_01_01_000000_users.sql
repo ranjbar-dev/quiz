@@ -12,6 +12,7 @@ CREATE TABLE users (
   phone_number  VARCHAR(100) NOT NULL DEFAULT '',
   work_phone    VARCHAR(100) NOT NULL DEFAULT '',
   jobs          VARCHAR(100) NOT NULL DEFAULT '',
+  education_level SMALLINT NOT NULL DEFAULT 0,
   password      VARCHAR(100) NOT NULL DEFAULT '',
   created_at    BIGINT NOT NULL DEFAULT 0
 );

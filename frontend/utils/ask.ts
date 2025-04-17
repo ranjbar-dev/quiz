@@ -40,6 +40,6 @@ export const ask = {
 
     getJobs: (): Promise<JobModel[]> => api("POST", "/api/job/all").then( data => data ),
 
-    updateProfile: (first_name: string, last_name: string, phone_number: string, melli_code: string, birth_date: string, education_level: string): Promise<UserModel> => api("POST", "/api/update-profile", { first_name, last_name, phone_number, melli_code, birth_date, education_level }).then( data => data.user ),
+    updateProfile: (user: UserModel): Promise<UserModel> => api("POST", "/api/user/update", user ).then( data => data.user ),
 
 }
